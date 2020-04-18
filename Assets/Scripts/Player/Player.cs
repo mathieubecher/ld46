@@ -47,6 +47,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Stun
+        if (stun > 0)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            stun -= Time.deltaTime;
+            return;
+        }
+        
         if (!_onPlatform && !_onLadder)
         {
             _coyotee += Time.deltaTime;
@@ -99,7 +107,6 @@ public class Player : MonoBehaviour
         // Fixing
         if (!move && _onFixable && (_onPlatform || _ladding))
         {
-            Debug.Log("Fix");
             _rigidbody.velocity = Vector3.zero;
             if (Input.GetKeyDown(KeyCode.E) && !_fixable.isFix) _fixing = true;
             if(_fixing) _fixing = _fixable.Fix();
@@ -195,6 +202,7 @@ public class Player : MonoBehaviour
         if(other.gameObject == _platform.gameObject){
             _onPlatform = false;
             transform.parent = null;
+            _velocityX = _platform.velocity.x;
         }
         else if (other.gameObject.layer == 8)
         {
@@ -228,6 +236,15 @@ public class Player : MonoBehaviour
             _onLadder = false;
             _ladding = false;
             _rigidbody.gravityScale = 3;
+        }
+    }
+
+    private float stun;
+    public void Stun(float time)
+    {
+        if (_onPlatform || _ladding)
+        {
+            stun = time;
         }
     }
 }
