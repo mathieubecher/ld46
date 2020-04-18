@@ -15,6 +15,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Platform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/ColliderTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Fixable.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -28,6 +29,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Platform.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/ColliderTest.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Fixable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
       </list>
@@ -63,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1587196306982</updated>
-      <workItem from="1587196310353" duration="21088000" />
+      <workItem from="1587196310353" duration="25681000" />
     </task>
     <servers />
   </component>

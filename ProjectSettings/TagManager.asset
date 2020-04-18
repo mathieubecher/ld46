@@ -19,6 +19,7 @@ TagManager:
   - PlayerJump
   - PlatformLast
   - Fixable
+  - Ladder
   - 
   - 
   - 
@@ -35,8 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - CameraFrontier
-  - CameraFocusPoint
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

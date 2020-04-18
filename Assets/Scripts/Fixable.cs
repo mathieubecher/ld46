@@ -45,9 +45,10 @@ public class Fixable : MonoBehaviour
 
     public void Broke()
     {
+        
         broken.SetActive(true);
         fix.SetActive(false);
         isFix = false;
-        _time = 0;
+        _time = fixTime;
     }
 }

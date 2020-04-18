@@ -13,11 +13,17 @@ public class ColliderTest : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        platform.Add(other.gameObject);
+        if (!other.isTrigger)
+        {
+            platform.Add(other.gameObject);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        platform.Remove(other.gameObject);
+        if (!other.isTrigger)
+        {
+            platform.Remove(other.gameObject);
+        }
     }
 }
