@@ -29,9 +29,10 @@ public class Animation : MonoBehaviour
             }
             
             if(Get(i).duration>0){
-                transform.localPosition = Vector3.Lerp(Get(i - 1).position, Get(i).position, timer/Get(i).duration);
+                transform.localPosition = Vector3.Lerp(Get(i - 1).position, Get(i).position, Get(i).curve.Evaluate(timer/Get(i).duration));
                 Quaternion local = transform.localRotation;
-                local.eulerAngles = new Vector3(0,0,Get(i - 1).rotation+ (Get(i).rotation-Get(i-1).rotation) * timer/Get(i).duration);
+                if(Mathf.Abs(Get(i).rotation - Get(i-1).rotation)>0.01f) local.eulerAngles = new Vector3(0,0,
+                    Get(i - 1).rotation + (Get(i).rotation - Get(i-1).rotation) * Get(i).curve.Evaluate(timer/Get(i).duration));
                 transform.localRotation = local;
             }
         }

@@ -44,11 +44,11 @@ public class Player : MonoBehaviour
         if (!Input.GetKey(KeyCode.Q) && !Input.GetKey(KeyCode.D) && _onPlatform) _moveX = 0;
         
         _moveX = Mathf.Min(1, Mathf.Max(-1, _moveX));
-        //if (_moveX < 0) transform.localScale = new Vector3(-1, transform.localScale.y);
-        //else if(_moveX > 0) transform.localScale = new Vector3(1, transform.localScale.y);
+        if (_moveX < 0) transform.localScale = new Vector3(-1, transform.localScale.y);
+        else if(_moveX > 0) transform.localScale = new Vector3(1, transform.localScale.y);
         
         
-        _rigidbody.velocity = new Vector2(_moveX * speed, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(_moveX * speed + _velocityX, _rigidbody.velocity.y);
 
         if (_rigidbody.velocity.y < 0) jump = false; 
         if (jump || (gameObject.layer == 11 && _testCollide.platform.Count > 0)) gameObject.layer = 11;
@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
     void Jump()
     {
         _rigidbody.AddForce(new Vector2(0, jumpForce + _platform.velocity.y),ForceMode2D.Impulse);
+        _velocityX = _platform.velocity.x;
+        
         jump = true;
         _onPlatform = false;
         transform.parent = null;

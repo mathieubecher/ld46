@@ -8,10 +8,16 @@ public class AnimationPoint : MonoBehaviour
 
     public Vector3 position;
     public float rotation;
-    public bool horaire = true;
-    public Vector3 left;
-    public Vector2 right;
-    
+
+    public AnimationCurve curve;
+
+    void Reset()
+    {
+        if(curve.keys.Length == 0) curve = AnimationCurve.Linear(0,0,1,1);
+    }
+    //public Vector3 left;
+    //public Vector2 right;
+
     // Start is called before the first frame update
     void Start()
     {
