@@ -7,12 +7,18 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
-          <e p="Animation.cs" t="Include" />
-          <e p="AnimationPoint.cs" t="Include" />
-          <e p="ColliderTest.cs" t="Include" />
-          <e p="FocusPoint.cs" t="Include" />
+          <e p="Animation" t="Include">
+            <e p="Animation.cs" t="Include" />
+            <e p="AnimationPoint.cs" t="Include" />
+            <e p="FocusPoint.cs" t="Include" />
+          </e>
+          <e p="Fixable.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
           <e p="Platform.cs" t="Include" />
-          <e p="Player.cs" t="Include" />
+          <e p="Player" t="Include">
+            <e p="ColliderTest.cs" t="Include" />
+            <e p="Player.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="ld46.sln" t="IncludeFlat" />
