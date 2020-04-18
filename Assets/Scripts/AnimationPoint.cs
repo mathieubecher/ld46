@@ -8,6 +8,7 @@ public class AnimationPoint : MonoBehaviour
 
     public Vector3 position;
     public float rotation;
+    public bool read = true;
 
     public AnimationCurve curve;
 

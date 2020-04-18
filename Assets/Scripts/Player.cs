@@ -34,20 +34,22 @@ public class Player : MonoBehaviour
             factorX = 0.05f;
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                // INPUT VERTICALE
                 Jump();
             }
 
         }
 
+        // INPUT HORIZONTALE
         if (Input.GetKey(KeyCode.Q)) _moveX -= factorX;
         if (Input.GetKey(KeyCode.D)) _moveX += factorX;
         if (!Input.GetKey(KeyCode.Q) && !Input.GetKey(KeyCode.D) && _onPlatform) _moveX = 0;
-        
+        // Update input velocity
         _moveX = Mathf.Min(1, Mathf.Max(-1, _moveX));
         if (_moveX < 0) transform.localScale = new Vector3(-1, transform.localScale.y);
         else if(_moveX > 0) transform.localScale = new Vector3(1, transform.localScale.y);
         
-        
+        // calculate velocity
         _rigidbody.velocity = new Vector2(_moveX * speed + _velocityX, _rigidbody.velocity.y);
 
         if (_rigidbody.velocity.y < 0) jump = false; 

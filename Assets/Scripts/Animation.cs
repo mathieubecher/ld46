@@ -25,6 +25,7 @@ public class Animation : MonoBehaviour
             if (timer > Get(i).duration)
             {
                 ++i;
+                while (!Get(i).read) ++i;
                 timer = 0;
             }
             
