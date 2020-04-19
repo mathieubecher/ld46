@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97e1cea6-dfd1-48d1-8cdd-9b0f04149e09" name="Default Changelist" comment="" />
@@ -17,6 +17,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/ColliderTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Fixable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Animation/AnimationPoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Animation/Animation.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -28,10 +29,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/AnimationPoint.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Animation.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Platform.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/ColliderTest.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Fixable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Platform.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Animation/AnimationPoint.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Animation/Animation.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
       </list>
     </option>
@@ -67,6 +70,7 @@
       <option name="presentableId" value="Default" />
       <updated>1587196306982</updated>
       <workItem from="1587196310353" duration="28652000" />
+      <workItem from="1587276912602" duration="12740000" />
     </task>
     <servers />
   </component>
@@ -78,7 +82,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

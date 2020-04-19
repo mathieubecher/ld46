@@ -9,11 +9,21 @@ public class Animation : MonoBehaviour
    
     private int i = 0;
     private float timer = 0;
+    public float beginTimer = 0;
     
     // Start is called before the first frame update
     void Start()
     {
         i = 1;
+        if(curve.Count > 0){
+            while (beginTimer > Get(i).duration)
+            {
+                beginTimer -= Get(i).duration;
+                ++i;
+            }
+        }
+
+        timer = beginTimer;
     }
 
     // Update is called once per frame
@@ -25,8 +35,9 @@ public class Animation : MonoBehaviour
             if (timer > Get(i).duration)
             {
                 ++i;
+                if(i%curve.Count == 0) Debug.Log("end");
                 while (!Get(i).read) ++i;
-                timer = 0;
+                timer = timer-Get(i-1).duration;
             }
             
             if(Get(i).duration>0){
@@ -37,6 +48,7 @@ public class Animation : MonoBehaviour
                 transform.localRotation = local;
             }
         }
+        
     }
 
     AnimationPoint Get(int pos)

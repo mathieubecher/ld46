@@ -12,10 +12,6 @@ public class AnimationPoint : MonoBehaviour
 
     public AnimationCurve curve;
 
-    void Reset()
-    {
-        if(curve.keys.Length == 0) curve = AnimationCurve.Linear(0,0,1,1);
-    }
     //public Vector3 left;
     //public Vector2 right;
 

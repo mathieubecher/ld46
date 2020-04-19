@@ -7,8 +7,10 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
+
 public class Player : MonoBehaviour
 {
+    
     public float speed = 5;
     public float jumpForce = 10;
     private float _moveX = 0;
@@ -22,7 +24,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _renderer;
     private bool jump;
-    private float _velocityX = 0;
+    private Vector2 _velocity;
 
     private Vector2 _normalContact;
 
@@ -37,9 +39,14 @@ public class Player : MonoBehaviour
     private bool _fixing;
     private Fixable _fixable;
 
+    private float _stun;
+    private float _gravityScale;
+
+    public float GRAVITY = 50;
     // Start is called before the first frame update
     void Start()
     {
+        _gravityScale = GRAVITY;
         _rigidbody = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
     }
@@ -47,13 +54,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
+        if (_velocity.y >= 0) Debug.Log("ça marche" + _velocity.y );
+        */
+        //if(_velocity.y < 0) Debug.Log("ça marche plus");
+        
         // Stun
-        if (stun > 0)
+        if (_stun > 0)
         {
             _rigidbody.velocity = Vector2.zero;
-            stun -= Time.deltaTime;
+            _stun -= Time.deltaTime;
             return;
         }
+
         
         if (!_onPlatform && !_onLadder)
         {
@@ -72,8 +85,6 @@ public class Player : MonoBehaviour
         if (_onPlatform)
         {
             factorX = 0.3f;
-           
-
         }
 
         // INPUT HORIZONTALE
@@ -96,71 +107,87 @@ public class Player : MonoBehaviour
         else if(Input.GetKey(KeyCode.D)) transform.localScale = new Vector3(1, transform.localScale.y);
 
        
+        if (!_onPlatform && !_ladding && (!_onWall || _velocity.y > 0)) _velocity.y -= _gravityScale * Time.deltaTime;
+        else if (_onWall) _velocity.y = -2;
+        else _velocity.y = 0;
         // calculate velocity
-        if(!_ladding)_rigidbody.velocity = new Vector2(_moveX * speed + _velocityX, (_onWall && _rigidbody.velocity.y < 0)?-2:_rigidbody.velocity.y);
+        if(!_ladding)_rigidbody.velocity = new Vector2(_moveX * speed + _velocity.x, _velocity.y);
         
         
-        if (_rigidbody.velocity.y <= 0) jump = false; 
-        if (jump || (gameObject.layer == 11 && _testCollide.platform.Count > 0)) gameObject.layer = 11;
+        if (_velocity.y <= 0) jump = false; 
+        if (jump || _ladding || (gameObject.layer == 11 && _testCollide.platform.Count > 0) || Input.GetKey(KeyCode.S)) gameObject.layer = 11;
         else gameObject.layer = 10;
         
         // Fixing
         if (!move && _onFixable && (_onPlatform || _ladding))
         {
             _rigidbody.velocity = Vector3.zero;
+            _velocity = Vector2.zero;
             if (Input.GetKeyDown(KeyCode.E) && !_fixable.isFix) _fixing = true;
             if(_fixing) _fixing = _fixable.Fix();
            
         }
         else _fixing = false;
-    }
 
+    }
+    
     void FixedUpdate()
     {
+        
         transform.rotation = Quaternion.identity;
         float laddingHeight = 0;
         if (Input.GetKey(KeyCode.Z) && _onLadder)
         {
             jump = true;
             laddingHeight += 1;
-            if (!_ladding) _moveX = 0;
+            if (!_ladding)
+            {
+                _moveX = 0;
+                transform.parent = _ladder.transform.parent;
+                
+            }
             _ladding = true;
         }
 
         if (Input.GetKey(KeyCode.S) && _onLadder)
         {
             laddingHeight -= 1;
-            if (!_ladding) _moveX = 0;
+            if (!_ladding)
+            {
+                _moveX = 0;
+                transform.parent = _ladder.transform.parent;
+            }
             _ladding = true;
         }
         if(_ladding)
         {
-            _rigidbody.gravityScale = 0;
-            _rigidbody.velocity = new Vector2(_moveX * speed, laddingHeight * speed);
+            _gravityScale = 0;
+            _velocity.y = laddingHeight * speed;
+            _rigidbody.velocity = new Vector2(_moveX * speed + laddingHeight * (_ladder.transform.rotation * Vector3.up).x * speed,  laddingHeight * (_ladder.transform.rotation * Vector3.up).y * speed);
         }
+        
+
     }
     
     void Jump()
     {
         if(_onPlatform || _coyotee < _coyoteeTime){
-            _rigidbody.AddForce(new Vector2(0, jumpForce + _platform.velocity.y),ForceMode2D.Impulse);
-            _velocityX = _platform.velocity.x;
-            
+            _velocity = _platform.velocity;
+            _velocity.y += jumpForce;
             jump = true;
             _onPlatform = false;
             transform.parent = null;
         }
         else if (_onWall)
         {
-            Vector2 force = new Vector2((_normalContact.x < 0)? -1 : 1, 1).normalized;
+            Vector2 force = new Vector2((_normalContact.x < 0)? -1 : 1, 1);
 
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,0);
-            _rigidbody.AddForce(force * jumpForce,ForceMode2D.Impulse);
-            _velocityX = force.x * jumpForce/10;
-            
+            _velocity = new Vector2(force.x * jumpForce/10,force.y * jumpForce);
+
             _moveX = 0;
             _onWall = false;
             jump = true;
+            _onPlatform = false;
         }
     }
     
@@ -169,7 +196,7 @@ public class Player : MonoBehaviour
     // GESTIONS COLLISION PLATEFORME
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.layer == 9 || other.gameObject.layer == 12)
+        if (other.gameObject.layer == 9)
         {
             // Test Collision
             foreach (ContactPoint2D point in other.contacts)
@@ -178,14 +205,13 @@ public class Player : MonoBehaviour
                 if (Vector2.Dot(Vector2.up, point.normal) < 0.5f) return;
             }
             
-            _velocityX = 0;
+            _velocity.x = 0;
             transform.parent = other.gameObject.transform.parent;
             
-            if(_platform != null) _platform.gameObject.layer = 9;
             
             _onPlatform = true;
             _platform = other.gameObject.GetComponent<Platform>();
-            _platform.gameObject.layer = 12;
+            
         }
         else if (other.gameObject.layer == 8 && !_onPlatform)
         {
@@ -199,10 +225,13 @@ public class Player : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D other)
     {
-        if(other.gameObject == _platform.gameObject){
+        if(other.gameObject == _platform.gameObject && _onPlatform){
+            
+            if(!_ladding) transform.parent = null;
+            else transform.parent = _ladder.transform.parent;
+            
             _onPlatform = false;
-            transform.parent = null;
-            _velocityX = _platform.velocity.x;
+            _velocity = _platform.velocity;
         }
         else if (other.gameObject.layer == 8)
         {
@@ -233,18 +262,20 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.layer == 14)
         {
+            if (!_onPlatform) transform.parent = null;
+            else transform.parent = _platform.transform.parent;
             _onLadder = false;
             _ladding = false;
-            _rigidbody.gravityScale = 3;
+            _gravityScale = GRAVITY;
         }
     }
 
-    private float stun;
+
     public void Stun(float time)
     {
         if (_onPlatform || _ladding)
         {
-            stun = time;
+            _stun = time;
         }
     }
 }
