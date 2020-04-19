@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         
         
         if (_velocity.y <= 0) jump = false; 
-        if (jump || _ladding || (gameObject.layer == 11 && _testCollide.platform.Count > 0) || Input.GetKey(KeyCode.S)) gameObject.layer = 11;
+        if (jump || _ladding || (gameObject.layer == 11 && _testCollide.platform.Count > 0) || (Input.GetKey(KeyCode.S) && transform.position.y > -13)) gameObject.layer = 11;
         else gameObject.layer = 10;
         
         // Fixing

@@ -20,7 +20,7 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_player.transform.position.y - 0.4f < transform.position.y) gameObject.layer = 15;
+        if (_player.transform.position.y - 0.2f < transform.position.y) gameObject.layer = 15;
         else gameObject.layer = 9;
         
         velocity = (transform.position - _lastPos)/Time.deltaTime;
