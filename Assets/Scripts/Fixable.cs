@@ -24,6 +24,7 @@ public class Fixable : MonoBehaviour
         {
           
           if(_time > 0) _time -= Time.deltaTime / 10;
+          
           progress.transform.localScale = new Vector3(_time/fixTime, 1,1);
         }
     }

@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera cam;
     public Player player;
 
+
+    public float minCooldownBroke = 10;
+    public float maxCooldownBroke = 50;
+    private float _cooldownBroke;
     public float timerStun = 0.2f;
     private float _stun;
 
@@ -22,13 +26,22 @@ public class GameManager : MonoBehaviour
         foreach(Fixable fix in FindObjectsOfType<Fixable>())
         {
             fixables.Add(fix);
-            fix.Broke();
+           
         }
+
+        _cooldownBroke = maxCooldownBroke;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        _cooldownBroke -= Time.deltaTime;
+        if (_cooldownBroke < 0)
+        {
+            Broke(fixables[Random.Range(0,fixables.Count)]);
+            _cooldownBroke = Random.Range(minCooldownBroke,maxCooldownBroke);
+        }
         if (_stun > 0)
         {
             _stun -= Time.deltaTime;
@@ -37,8 +50,6 @@ public class GameManager : MonoBehaviour
                 _stun / timerStun * 2;
             cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
                 _stun / timerStun * 2;
-            
-
         }
     }
 
@@ -47,5 +58,10 @@ public class GameManager : MonoBehaviour
         _cooldownStun = 2;
         _stun = timerStun;
         player.Stun(_stun);
+    }
+
+    public void Broke(Fixable fix)
+    {
+        fix.Broke();
     }
 }
