@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         }
 
         // INPUT HORIZONTALE
-        if (Input.GetKey(KeyCode.Q))
+        if ((Input.GetKey(KeyCode.Q) ||Input.GetKey(KeyCode.A)))
         {
             _moveX -= factorX;
             move = true;
@@ -99,11 +99,11 @@ public class Player : MonoBehaviour
             _moveX += factorX;
             move = true;
         }
-        if (!Input.GetKey(KeyCode.Q) && !Input.GetKey(KeyCode.D) && (_onPlatform || _ladding)) _moveX = 0;
+        if (!(Input.GetKey(KeyCode.Q) ||Input.GetKey(KeyCode.A)) && !Input.GetKey(KeyCode.D) && (_onPlatform || _ladding)) _moveX = 0;
         // Update input velocity
         
         _moveX = Mathf.Min(1, Mathf.Max(-1, _moveX));
-        if (Input.GetKey(KeyCode.Q)) transform.localScale = new Vector3(-1, transform.localScale.y);
+        if ((Input.GetKey(KeyCode.Q) ||Input.GetKey(KeyCode.A))) transform.localScale = new Vector3(-1, transform.localScale.y);
         else if(Input.GetKey(KeyCode.D)) transform.localScale = new Vector3(1, transform.localScale.y);
 
        
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         if(!_ladding) transform.rotation = Quaternion.identity;
         else transform.localRotation = Quaternion.identity; 
         float laddingHeight = 0;
-        if (Input.GetKey(KeyCode.Z) && _onLadder)
+        if ((Input.GetKey(KeyCode.Z) ||Input.GetKey(KeyCode.W)) && _onLadder)
         {
             jump = true;
             laddingHeight += 1;
@@ -145,6 +145,7 @@ public class Player : MonoBehaviour
             {
                 _moveX = 0;
                 transform.parent = _ladder.transform.parent;
+                transform.localPosition = new Vector3(0,transform.localPosition.y,transform.localPosition.z);
                 
             }
             _ladding = true;
@@ -157,6 +158,7 @@ public class Player : MonoBehaviour
             {
                 _moveX = 0;
                 transform.parent = _ladder.transform.parent;
+                transform.localPosition = new Vector3(0,transform.localPosition.y,transform.localPosition.z);
             }
             _ladding = true;
         }
@@ -172,10 +174,11 @@ public class Player : MonoBehaviour
     
     void Jump()
     {
-        if(_onPlatform || _coyotee < _coyoteeTime){
+        if(_onPlatform || _coyotee < _coyoteeTime || _ladding){
             _velocity = _platform.velocity;
             _velocity.y += jumpForce;
             jump = true;
+            _ladding = false;
             _onPlatform = false;
             transform.parent = null;
         }

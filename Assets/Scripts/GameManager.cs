@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public float value;
     public List<Fixable> fixables;
     
 
     public CinemachineVirtualCamera cam;
     public Player player;
-
-
+    public Text score;
+    public ParticleSystem ash;
+    
     public float minCooldownBroke = 10;
     public float maxCooldownBroke = 50;
     private float _cooldownBroke;
     public float timerStun = 0.2f;
     private float _stun;
-
+    
     private float _cooldownStun = 2;
     // Start is called before the first frame update
     void Start()
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
         _cooldownBroke -= Time.deltaTime;
         if (_cooldownBroke < 0)
         {
+            maxCooldownBroke = (maxCooldownBroke - minCooldownBroke)/2 + minCooldownBroke;
             Broke(fixables[Random.Range(0,fixables.Count)]);
             _cooldownBroke = Random.Range(minCooldownBroke,maxCooldownBroke);
         }
@@ -51,6 +55,16 @@ public class GameManager : MonoBehaviour
             cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain =
                 _stun / timerStun * 2;
         }
+
+        value = 0;
+        foreach (Fixable fix in fixables)
+        {
+            value += fix.time/fix.fixTime;
+        }
+
+        value /= fixables.Count;
+        score.text = (int)Mathf.Floor(value*100) + "%";
+
     }
 
     public void Stun()
@@ -58,6 +72,7 @@ public class GameManager : MonoBehaviour
         _cooldownStun = 2;
         _stun = timerStun;
         player.Stun(_stun);
+        ash.Play();
     }
 
     public void Broke(Fixable fix)
