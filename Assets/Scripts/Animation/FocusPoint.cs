@@ -7,7 +7,6 @@ public class FocusPoint : MonoBehaviour
 {
     public GameObject focus;
     
-    
     void FixedUpdate()
     {
         transform.position = focus.transform.position;

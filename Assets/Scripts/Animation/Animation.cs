@@ -9,11 +9,13 @@ public class Animation : MonoBehaviour
    
     private int i = 0;
     private float timer = 0;
+    private GameManager _manager;
     public float beginTimer = 0;
     
     // Start is called before the first frame update
     void Start()
     {
+        _manager = FindObjectOfType<GameManager>();
         i = 1;
         if(curve.Count > 0){
             while (beginTimer > Get(i).duration)
@@ -34,6 +36,7 @@ public class Animation : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > Get(i).duration)
             {
+                if (Get(i).stun) _manager.Stun();
                 ++i;
                 if(i%curve.Count == 0) Debug.Log("end");
                 while (!Get(i).read) ++i;

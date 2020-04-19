@@ -11,6 +11,8 @@ public class AnimationPoint : MonoBehaviour
     public bool read = true;
 
     public AnimationCurve curve;
+    
+    public bool stun = false;
 
     //public Vector3 left;
     //public Vector2 right;

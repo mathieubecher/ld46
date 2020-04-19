@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
-        
+        if (_onPlatform) transform.position = new Vector2(transform.position.x + _platform.force * Time.deltaTime, transform.position.y);   
         transform.rotation = Quaternion.identity;
         float laddingHeight = 0;
         if (Input.GetKey(KeyCode.Z) && _onLadder)
