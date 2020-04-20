@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private float _moveX = 0;
     public float _coyoteeTime = 0.1f;
     private float _coyotee = 0;
+    public Animator animator;
     
     private bool _onPlatform;
     private Platform _platform;
@@ -128,14 +129,15 @@ public class Player : MonoBehaviour
            
         }
         else _fixing = false;
+        animator.SetBool("fix",_fixing);
 
     }
     
     void FixedUpdate()
     {
         if (_onPlatform) transform.position = new Vector2(transform.position.x + _platform.force * Time.deltaTime, transform.position.y);   
-        if(!_ladding) transform.rotation = Quaternion.identity;
-        else transform.localRotation = Quaternion.identity; 
+        /*if(!_ladding)*/ transform.rotation = Quaternion.identity;
+        //else transform.localRotation = Quaternion.identity; 
         float laddingHeight = 0;
         if ((Input.GetKey(KeyCode.Z) ||Input.GetKey(KeyCode.W)) && _onLadder)
         {
@@ -169,7 +171,8 @@ public class Player : MonoBehaviour
             _rigidbody.velocity = new Vector2(_moveX * speed + laddingHeight * (_ladder.transform.rotation * Vector3.up).x * speed,  laddingHeight * (_ladder.transform.rotation * Vector3.up).y * speed);
         }
         
-
+        animator.SetFloat("velocity",Mathf.Abs(_rigidbody.velocity.x));
+        animator.SetFloat("gravity",_rigidbody.velocity.y);
     }
     
     void Jump()
@@ -181,6 +184,7 @@ public class Player : MonoBehaviour
             _ladding = false;
             _onPlatform = false;
             transform.parent = null;
+            animator.SetTrigger("Jump");
         }
         else if (_onWall)
         {
@@ -192,6 +196,7 @@ public class Player : MonoBehaviour
             _onWall = false;
             jump = true;
             _onPlatform = false;
+            animator.SetTrigger("Jump");
         }
     }
     
@@ -215,6 +220,7 @@ public class Player : MonoBehaviour
             
             _onPlatform = true;
             _platform = other.gameObject.GetComponent<Platform>();
+            animator.SetTrigger("Floor");
             
         }
         else if (other.gameObject.layer == 8 && !_onPlatform)

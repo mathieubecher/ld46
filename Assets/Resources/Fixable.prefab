@@ -130,9 +130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fix: {fileID: 6073151216325891818}
   broken: {fileID: 6073151217505814465}
-  progressbar: {fileID: 6331037132678094617}
+  progressbar: {fileID: 1183069843688749611}
   isFix: 1
-  fixTime: 5
+  fixTime: 2
   color:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0.027173996, a: 1}
@@ -162,7 +162,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  progress: {fileID: 7635211096429022525}
+  progress: {fileID: 6559741913712260624}
 --- !u!61 &3477977450550228695
 BoxCollider2D:
   m_ObjectHideFlags: 0

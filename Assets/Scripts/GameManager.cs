@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
 
         value /= fixables.Count;
         score.text = (int)Mathf.Floor(value*100) + "%";
+        if (value < 0) SceneManager.LoadScene(0);
 
     }
 

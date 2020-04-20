@@ -14,7 +14,12 @@ public class Fixable : MonoBehaviour
     
     public Gradient color;
     public SpriteRenderer progress;
-    public float time => _time;
+
+    public float time
+    {
+        get => _time;
+        set => _time = value;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +37,7 @@ public class Fixable : MonoBehaviour
             {
                 progressbar.SetActive(false);
             }
-          if(_time > 0) _time -= Time.deltaTime / 10;
+          if(_time > 0) _time -= Time.deltaTime / 8;
           
           progress.transform.parent.localScale = new Vector3(_time/fixTime, 1,1);
           progress.color = color.Evaluate(_time/fixTime);
