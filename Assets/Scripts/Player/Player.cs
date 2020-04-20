@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         }
         
         
-        float factorX = 0.03f;
+        float factorX = 0.1f;
         if (_onPlatform)
         {
             factorX = 0.3f;

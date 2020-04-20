@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private float _stun;
     
     private float _cooldownStun = 2;
+
+    private bool start = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,16 +36,21 @@ public class GameManager : MonoBehaviour
         }
 
         _cooldownBroke = maxCooldownBroke;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!start)
+        {
+            start = true;
+            Broke(fixables[Random.Range(0,fixables.Count)]);
+        }
         _cooldownBroke -= Time.deltaTime;
         if (_cooldownBroke < 0)
         {
-            maxCooldownBroke = (maxCooldownBroke - minCooldownBroke)/2 + minCooldownBroke;
+            maxCooldownBroke = Mathf.Max(minCooldownBroke, maxCooldownBroke - 5);
             Broke(fixables[Random.Range(0,fixables.Count)]);
             _cooldownBroke = Random.Range(minCooldownBroke,maxCooldownBroke);
         }

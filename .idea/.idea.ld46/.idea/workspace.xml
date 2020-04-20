@@ -37,11 +37,11 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Animation/AnimationPoint.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Animation/Animation.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Platform.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scenes/LoadScene.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AllFix.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Fixable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scenes/LoadScene.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/AllFix.cs" />
       </list>
     </option>
   </component>
@@ -76,7 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1587196306982</updated>
       <workItem from="1587196310353" duration="28652000" />
-      <workItem from="1587276912602" duration="28167000" />
+      <workItem from="1587276912602" duration="29872000" />
     </task>
     <servers />
   </component>

@@ -37,7 +37,7 @@ public class Fixable : MonoBehaviour
             {
                 progressbar.SetActive(false);
             }
-          if(_time > 0) _time -= Time.deltaTime / 8;
+          if(_time > 0) _time -= Time.deltaTime / 15;
           
           progress.transform.parent.localScale = new Vector3(_time/fixTime, 1,1);
           progress.color = color.Evaluate(_time/fixTime);
